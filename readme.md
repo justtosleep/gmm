@@ -1,10 +1,15 @@
 # environment
 
 pip install pandas
+
 pip install numpy
+
 pip install matplotlib
+
 pip install sklearn
+
 pip install scipy
+
 pip install dython
 
 # running
