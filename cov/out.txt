@@ -1,0 +1,57 @@
+nohup: ignoring input
+Calculating covariance matrix for 'Match 2/2006/2006-data.csv'...
+/home/tianhao/code/clustering/gmm/cov/cal_cov.py:23: DtypeWarning: Columns (0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31) have mixed types. Specify dtype option on import or set low_memory=False.
+  data = pd.read_csv(input_path, header=None, skipinitialspace=True)
+/home/tianhao/anaconda3/envs/dev/lib/python3.9/site-packages/dython/nominal.py:148: PerformanceWarning: The following operation may generate 10376579850 cells in the resulting pandas object.
+  confusion_matrix = pd.crosstab(x, y)
+/home/tianhao/anaconda3/envs/dev/lib/python3.9/site-packages/dython/nominal.py:148: PerformanceWarning: The following operation may generate 10391857350 cells in the resulting pandas object.
+  confusion_matrix = pd.crosstab(x, y)
+/home/tianhao/anaconda3/envs/dev/lib/python3.9/site-packages/dython/nominal.py:148: PerformanceWarning: The following operation may generate 20663226150 cells in the resulting pandas object.
+  confusion_matrix = pd.crosstab(x, y)
+Traceback (most recent call last):
+  File "/home/tianhao/code/clustering/gmm/cov/cal_cov.py", line 48, in <module>
+    'workclass',
+  File "/home/tianhao/anaconda3/envs/dev/lib/python3.9/site-packages/dython/nominal.py", line 671, in associations
+    _compute_associations(
+  File "/home/tianhao/anaconda3/envs/dev/lib/python3.9/site-packages/dython/nominal.py", line 1084, in _compute_associations
+    cell = cramers_v(
+  File "/home/tianhao/anaconda3/envs/dev/lib/python3.9/site-packages/dython/nominal.py", line 148, in cramers_v
+    confusion_matrix = pd.crosstab(x, y)
+  File "/home/tianhao/anaconda3/envs/dev/lib/python3.9/site-packages/pandas/core/reshape/pivot.py", line 715, in crosstab
+    table = df.pivot_table(
+  File "/home/tianhao/anaconda3/envs/dev/lib/python3.9/site-packages/pandas/core/frame.py", line 8579, in pivot_table
+    return pivot_table(
+  File "/home/tianhao/anaconda3/envs/dev/lib/python3.9/site-packages/pandas/core/reshape/pivot.py", line 97, in pivot_table
+    table = __internal_pivot_table(
+  File "/home/tianhao/anaconda3/envs/dev/lib/python3.9/site-packages/pandas/core/reshape/pivot.py", line 247, in __internal_pivot_table
+    table = table.droplevel(0, axis=1)
+  File "/home/tianhao/anaconda3/envs/dev/lib/python3.9/site-packages/pandas/core/generic.py", line 850, in droplevel
+    return self.set_axis(new_labels, axis=axis, copy=None)
+  File "/home/tianhao/anaconda3/envs/dev/lib/python3.9/site-packages/pandas/core/frame.py", line 5034, in set_axis
+    return super().set_axis(labels, axis=axis, copy=copy)
+  File "/home/tianhao/anaconda3/envs/dev/lib/python3.9/site-packages/pandas/core/generic.py", line 708, in set_axis
+    return self._set_axis_nocheck(labels, axis, inplace=False, copy=copy)
+  File "/home/tianhao/anaconda3/envs/dev/lib/python3.9/site-packages/pandas/core/generic.py", line 719, in _set_axis_nocheck
+    obj = self.copy(deep=copy and not using_copy_on_write())
+  File "/home/tianhao/anaconda3/envs/dev/lib/python3.9/site-packages/pandas/core/generic.py", line 6452, in copy
+    data = self._mgr.copy(deep=deep)
+  File "/home/tianhao/anaconda3/envs/dev/lib/python3.9/site-packages/pandas/core/internals/managers.py", line 664, in copy
+    res._consolidate_inplace()
+  File "/home/tianhao/anaconda3/envs/dev/lib/python3.9/site-packages/pandas/core/internals/managers.py", line 1829, in _consolidate_inplace
+    self.blocks = _consolidate(self.blocks)
+  File "/home/tianhao/anaconda3/envs/dev/lib/python3.9/site-packages/pandas/core/internals/managers.py", line 2272, in _consolidate
+    merged_blocks, _ = _merge_blocks(
+  File "/home/tianhao/anaconda3/envs/dev/lib/python3.9/site-packages/pandas/core/internals/managers.py", line 2304, in _merge_blocks
+    new_values = new_values[argsort]
+numpy.core._exceptions._ArrayMemoryError: Unable to allocate 154. GiB for an array with shape (202879, 101850) and data type int64
+Calculating covariance matrix for 'Match 2/2017/2017-data.csv'...
+Error: File '../dataset/Match 2/2017/2017-data.csv' does not exist.
+Error: File '../dataset/Match 2/2017/2017-data.csv' does not exist.
+cal.bash: line 18: continue: only meaningful in a `for', `while', or `until' loop
+domain:  2017-data
+Traceback (most recent call last):
+  File "/home/tianhao/code/clustering/gmm/cov/cal_cov.py", line 89, in <module>
+    width = data.shape[1]
+NameError: name 'data' is not defined
+cal.bash: line 25: syntax error near unexpected token `done'
+cal.bash: line 25: `done'

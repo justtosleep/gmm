@@ -1,0 +1,26 @@
+abalone
+    (4177, 8)
+    346.65 seconds
+
+covtype
+    sample50k
+        (50000, 54)
+
+
+UCLAdult
+    norm105
+    (32561, 105)
+    8941.41 seconds
+
+    sparse
+    (32561, 123)
+
+
+    famd
+    (32561, 100)
+
+
+    mix-kfreq
+    (32561, 123)
+
+

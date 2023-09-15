@@ -1,0 +1,103 @@
+Start reading data
+data.shape (32561, 105)
+Directory './metrics/UCLAdult_kfreq/measure/' created successfully.
+reading:  n_components=2
+Traceback (most recent call last):
+  File "/home/tianhao/code/clustering/em/./out_metrics_kmean.py", line 71, in <module>
+    y_pred = np.loadtxt(prediction_path, delimiter=",").astype(np.int32)
+  File "/home/tianhao/anaconda3/envs/dev/lib/python3.9/site-packages/numpy/lib/npyio.py", line 1373, in loadtxt
+    arr = _read(fname, dtype=dtype, comment=comment, delimiter=delimiter,
+  File "/home/tianhao/anaconda3/envs/dev/lib/python3.9/site-packages/numpy/lib/npyio.py", line 992, in _read
+    fh = np.lib._datasource.open(fname, 'rt', encoding=encoding)
+  File "/home/tianhao/anaconda3/envs/dev/lib/python3.9/site-packages/numpy/lib/_datasource.py", line 193, in open
+    return ds.open(path, mode, encoding=encoding, newline=newline)
+  File "/home/tianhao/anaconda3/envs/dev/lib/python3.9/site-packages/numpy/lib/_datasource.py", line 533, in open
+    raise FileNotFoundError(f"{path} not found.")
+FileNotFoundError: ./result/UCLAdult_kfreq/prediction/y_pred/full_2.csv not found.
+Start reading data
+data.shape (32561, 105)
+reading:  n_components=2
+num_classes 2
+Successfully calculate centers 2
+reading:  n_components=3
+num_classes 3
+Successfully calculate centers 3
+reading:  n_components=4
+num_classes 4
+Successfully calculate centers 4
+reading:  n_components=5
+num_classes 5
+Successfully calculate centers 5
+reading:  n_components=6
+num_classes 6
+Successfully calculate centers 6
+reading:  n_components=7
+num_classes 7
+Successfully calculate centers 7
+reading:  n_components=8
+num_classes 8
+Successfully calculate centers 8
+reading:  n_components=9
+num_classes 9
+Successfully calculate centers 9
+reading:  n_components=10
+num_classes 10
+Successfully calculate centers 10
+reading:  n_components=20
+num_classes 20
+Successfully calculate centers 20
+reading:  n_components=30
+num_classes 30
+Successfully calculate centers 30
+reading:  n_components=40
+num_classes 40
+Successfully calculate centers 40
+reading:  n_components=50
+num_classes 50
+Successfully calculate centers 50
+reading:  n_components=60
+num_classes 60
+Successfully calculate centers 60
+reading:  n_components=70
+num_classes 70
+Successfully calculate centers 70
+reading:  n_components=80
+num_classes 80
+Successfully calculate centers 80
+reading:  n_components=90
+num_classes 90
+Successfully calculate centers 90
+reading:  n_components=100
+num_classes 100
+Successfully calculate centers 100
+reading:  n_components=110
+num_classes 110
+Successfully calculate centers 110
+reading:  n_components=120
+num_classes 120
+Successfully calculate centers 120
+reading:  n_components=130
+num_classes 130
+Successfully calculate centers 130
+reading:  n_components=140
+num_classes 140
+Successfully calculate centers 140
+reading:  n_components=150
+num_classes 150
+Successfully calculate centers 150
+reading:  n_components=160
+num_classes 160
+Successfully calculate centers 160
+reading:  n_components=170
+num_classes 170
+Successfully calculate centers 170
+reading:  n_components=180
+num_classes 180
+Successfully calculate centers 180
+reading:  n_components=190
+num_classes 190
+Successfully calculate centers 190
+reading:  n_components=200
+num_classes 200
+Successfully calculate centers 200
+Best results so far: {'components': 200, 'mse': 2.2044628392280816, 'mae': 4.5872825861434245, 'time': 507.3625588417053}
