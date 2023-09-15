@@ -6,32 +6,31 @@ from tools import create_directory, output_metrics, pred2prob, calculate_centers
 
 
 # read command line arguments
-parser = argparse.ArgumentParser(description="GaussianMixture Clustering")
+parser = argparse.ArgumentParser(description="Calculate the metrics of dataset.")
 
 # add positional arguments
-parser.add_argument("dataset", type=str, help="name of dataset")
 
 # add optional arguments
+parser.add_argument("--dataset", type=str, help="name of dataset")
+parser.add_argument("--data_path", type=str, help="path of dataset")
 parser.add_argument("--method", type=str, default="", help="name of dataset processing method")
 
 args = parser.parse_args()
 domain = args.dataset
+data_path = args.data_path
 method = args.method
 
 # 1. Read data
 print("Start reading data")
 name = domain+"_"+method if method != "" else domain
-# covariance_types = ['full', 'tied', 'diag', 'spherical']
-covariance_types = ['full']
-input_dir = "./dataset/"+domain+"/"
-data_path = input_dir + domain + "_features.csv"
-data = pd.read_csv(data_path, skipinitialspace=True, header=None)
+covariance_types = ['full', 'tied', 'diag', 'spherical']
+# covariance_types = ['tied', 'diag', 'spherical']
+if domain == "UCLAdult":
+    data_path = "UCLAdult/UCLAdult_norm105.data"
+data_path = "../dataset/" + data_path
+data = pd.read_csv(data_path, skipinitialspace=True)
 data = np.array(data)
 print("data.shape", data.shape)
-# label_path = input_dir + domain + "_labels.csv"
-# labels = np.loadtxt(label_path, delimiter=",").astype(np.int32)
-# labels = labels[1:]
-# print("labels.shape", labels.shape)
 
 #2. Set parameters
 best_results = {
@@ -41,8 +40,15 @@ best_results = {
     'mae': np.inf,
     'time': 0
 }
+best_results_prob = {
+    'components': 0,
+    'covariance_type': None,
+    'mse': np.inf,
+    'mae': np.inf,
+    'time': 0
+}
 
-result_dir = "./metrics/" + name + "/measure"
+result_dir = "../metrics/" + name + "/measure"
 output_dir = result_dir + "/"
 if not os.path.exists(output_dir):
     create_directory(output_dir)
@@ -50,9 +56,17 @@ output_best_path = output_dir+"best.csv"
 with open(output_best_path, 'a') as f:
     f.write("n_components,covariance_type,mse,mae,time\n")
 
+#probability weight metrics
+outprob_dir = result_dir + "_prob/"
+if not os.path.exists(outprob_dir):
+    create_directory(outprob_dir)
+outprob_best_path = outprob_dir+"best.csv"
+with open(outprob_best_path, 'a') as f:
+    f.write("n_components,covariance_type,mse,mae,time\n")
+
 #3. Output metrics
 # n_init = 1
-pred_dir = "./result/" + name + "/prediction/"
+pred_dir = "../result/" + name + "/prediction/"
 for covariance_type in covariance_types:
     pred_path = pred_dir+f"{covariance_type}.csv"
     pred = pd.read_csv(pred_path, skipinitialspace=True)
@@ -63,16 +77,21 @@ for covariance_type in covariance_types:
         n_components = pred['n_components'].values
     times = pred['time'].values
     prediction_paths = pred['prediction_path'].values
+    probability_paths = pred['probability_path'].values
 
     output_path = output_dir+f"{covariance_type}.csv"
     with open(output_path, 'w') as f:
         f.write("n_components,mse,mae,time\n")
+    outprob_path = outprob_dir+f"{covariance_type}.csv"
+    with open(outprob_path, 'w') as f:
+        f.write("n_components,mse,mae\n")
     
     for i, prediction_path in enumerate(prediction_paths):
         n_component = n_components[i]
         elapsed_time = times[i]
         print(f"reading: covariance_type={covariance_type}, n_components={n_component}")
         y_pred = np.loadtxt(prediction_path, delimiter=",").astype(np.int32)
+        y_prob = np.loadtxt(probability_paths[i], delimiter=",").astype(np.float32)
 
         centers = calculate_centers(data, y_pred)
         # print("centers.shape", centers.shape)
@@ -87,9 +106,20 @@ for covariance_type in covariance_types:
             best_results['mae'] = mae
             best_results['time'] = elapsed_time
 
+        mse, mae = output_metrics(y_pred, y_prob, data, centers)
+        with open(outprob_path, 'a') as f:
+            f.write(f"{n_component},{mse},{mae}\n")
+        if mse < best_results_prob['mse']:
+            best_results_prob['components'] = n_component
+            best_results_prob['covariance_type'] = covariance_type
+            best_results_prob['mse'] = mse
+            best_results_prob['mae'] = mae
+            best_results_prob['time'] = elapsed_time
     print(f"Best results so far: {best_results}")
     with open(output_best_path, 'a') as f:
         f.write(f"{best_results['components']},{best_results['covariance_type']},{best_results['mse']},{best_results['mae']},{best_results['time']}\n")
+    with open(outprob_best_path, 'a') as f:
+        f.write(f"{best_results_prob['components']},{best_results_prob['covariance_type']},{best_results_prob['mse']},{best_results_prob['mae']},{best_results_prob['time']}\n")
 
 
 # # 4. Output one prediction
