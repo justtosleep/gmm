@@ -8,9 +8,9 @@ while IFS=":" read -r datapath dataset method return_code; do
     if [ "$return_code" -eq 0 ]; then
         dataset_method["$dataset"]="$method"
         if [ -z "$method" ]; then
-            nohup python out_metrics.py --dataset "$dataset" --data_path "$datapath" > "../log/${dataset}_metric.out" 2>&1 &
+            nohup python metric.py --dataset "$dataset" --data_path "$datapath" > "../log/${dataset}_metric.out" 2>&1 &
         else
-            nohup python out_metrics.py --dataset "$dataset" --data_path "$datapath" --method "$method" > "../log/${dataset}_metric.out" 2>&1 &
+            nohup python metric.py --dataset "$dataset" --data_path "$datapath" --method "$method" > "../log/${dataset}_metric.out" 2>&1 &
         fi
         pid=$!
         pid_dataset["$pid"]="$dataset"

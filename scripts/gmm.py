@@ -67,7 +67,8 @@ for n_init in [1]:
         for n_component in n_components:
             print(f"Trying n_component={n_component}, covariance_type={covariance_type}, n_init={n_init}")
             start_time = time.time()
-            # GMM
+            #GMM
+            #If reg_covar is not set, the vermont-diag will fail
             model = GaussianMixture(n_components=n_component, \
                                     n_init=n_init, \
                                     covariance_type=covariance_type, \
