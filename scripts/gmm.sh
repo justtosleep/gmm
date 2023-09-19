@@ -1,6 +1,7 @@
 #!/bin/bash
 
-mkdir -p log
+mkdir -p ../log
+rm -f ../log/gmm.out
 
 declare -A pid_datapath
 declare -A datapath_method
@@ -21,10 +22,14 @@ declare -A datapath_dataset
 # datapath_dataset["Match 2/2006/2006-data.csv"]="2006"
 # datapath_method["Match 2/2017/2017-data.csv]=""
 # datapath_dataset["Match 2/2017/2017-data.csv"]="2017"
-datapath_method["Match 3/Arizona/arizona.csv"]=""
-datapath_dataset["Match 3/Arizona/arizona.csv"]="arizona"
-datapath_method["Match 3/Vermont/vermont.csv"]=""
-datapath_dataset["Match 3/Vermont/vermont.csv"]="vermont"
+# datapath_method["Match 3/Arizona/arizona.csv"]=""
+# datapath_dataset["Match 3/Arizona/arizona.csv"]="arizona"
+# datapath_method["Match 3/Vermont/vermont.csv"]=""
+# datapath_dataset["Match 3/Vermont/vermont.csv"]="vermont"
+datapath_method["UCLAdult/UCLAdult_sample1.data"]="sample1"
+datapath_dataset["UCLAdult/UCLAdult_sample1.data"]="UCLAdult"
+datapath_method["UCLAdult/UCLAdult_sample2.data"]="sample2"
+datapath_dataset["UCLAdult/UCLAdult_sample2.data"]="UCLAdult"
 
 for datapath in "${!datapath_method[@]}"; do
     method="${datapath_method[$datapath]}"

@@ -1,3 +1,0 @@
-nohup: ignoring input
-Calculating covariance matrix for 'adult/adult.data'...
-Error: File '../dataset/adult/adult.data' does not exist.

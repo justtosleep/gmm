@@ -92,7 +92,7 @@ def output_metrics(y_pred, y_prob, data, dict_centers):
         mse: mean squared error
         mae: mean absolute error
     """
-    data = np.array(data)
+    data = np.array(data)   # must or will slice(None,None,None) error
 
     # #Calculate mse and mae in batches
     # batch_size = 15000

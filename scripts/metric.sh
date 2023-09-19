@@ -1,6 +1,6 @@
 #!/bin/bash
 
-mkdir -p log
+mkdir -p ../log
 
 declare -A pid_dataset
 declare -A dataset_method

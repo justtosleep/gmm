@@ -24,9 +24,14 @@ method = args.method
 print("Start reading data")
 name = domain+"_"+method if method != "" else domain
 covariance_types = ['full', 'tied', 'diag', 'spherical']
-# covariance_types = ['tied', 'diag', 'spherical']
+# covariance_types = ['full']
 if domain == "UCLAdult":
-    data_path = "UCLAdult/UCLAdult_norm105.data"
+    if method == "sample1":
+        data_path = "UCLAdult/UCLAdult_sample1.data"
+    elif method == "sample2":
+        data_path = "UCLAdult/UCLAdult_sample2.data"
+    else:
+        data_path = "UCLAdult/UCLAdult_norm105.data"
 data_path = "../dataset/" + data_path
 data = pd.read_csv(data_path, skipinitialspace=True)
 data = np.array(data)

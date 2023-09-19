@@ -1,10 +1,10 @@
 #!/bin/bash
 
-filenames=("adult/adult.data")
 # filenames=("abalone/abalone.data" "covtype/covtype_restored.data" "adult/adult.data")
 # filenames=("Match 2/2006/2006-data.csv" "Match 2/2017/2017-data.csv" "Match 3/Arizona/arizona.csv" "Match 3/Vermont/vermont.csv")
 # filenames=("Match 3/Arizona/arizona.csv" "Match 3/Vermont/vermont.csv")
-colstype="num" # num, cat
+filenames=("Match 3/Arizona/arizona.csv")
+colstype="num" # num, cat, mix
 
 for filename in "${filenames[@]}"; do
     echo "Calculating covariance matrix for '$filename'..."
