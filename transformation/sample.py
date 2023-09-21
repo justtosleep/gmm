@@ -10,7 +10,7 @@ all_label = pd.read_csv(label_path, skipinitialspace=True, header=None).astype(n
 headers = list(all_data.columns.values)
 
 np.random.seed(42)
-sample_num = 2000
+sample_num = 10000
 idx = np.random.choice(len(all_data), size=sample_num , replace=False)
 sample_data = all_data.iloc[idx]
 sample_label = all_label.iloc[idx]

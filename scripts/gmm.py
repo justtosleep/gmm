@@ -5,10 +5,10 @@ import time
 import numpy as np
 import pandas as pd
 import argparse
-# sys.path.append("..")
+sys.path.append("..")
 from tools import create_directory
 from sklearn.preprocessing import MinMaxScaler
-from sklearn.mixture import GaussianMixture
+from ..mixture import GaussianMixture
 
 # read command line arguments
 parser = argparse.ArgumentParser(description="GaussianMixture Clustering")
@@ -72,6 +72,7 @@ for n_init in [1]:
             model = GaussianMixture(n_components=n_component, \
                                     n_init=n_init, \
                                     covariance_type=covariance_type, \
+                                    init_params='k-means++', \
                                     random_state=42
                                     )
             model.fit(data)

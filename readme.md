@@ -24,3 +24,5 @@ the results of gmm will be in the results folder
 
 the results of metric will be in the metrics folder
 
+$ nohup bash gmm.sh > "../log/gmm_score.out" 2>&1 &
+
