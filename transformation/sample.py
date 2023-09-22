@@ -25,7 +25,6 @@ sample_data.to_csv(output_data_path, mode='a', index=False, header=False)
 np.savetxt(output_label_path, sample_label, delimiter=",", fmt="%s")
 
 np.random.seed(40)
-sample_num = 2000
 idx = np.random.choice(len(all_data), size=sample_num , replace=False)
 sample_data = all_data.iloc[idx]
 sample_label = all_label.iloc[idx]
