@@ -152,11 +152,17 @@ def m_setp(X, log_resp, covariance_type):
     return weights, means, covariances, precisions_cholesky
 
 def cal_diff(means1, covariances1, means2, covariance2):
-    l1_means_dist = np.linalg.norm(means1-means2, ord=1, axis=1).mean()
-    l2_means_dist = np.linalg.norm(means1-means2, ord=2, axis=1).mean()
-    l1_covariances_dist = np.linalg.norm(covariances1-covariance2, ord=1, axis=(1,2)).mean()
-    l2_covariances_dist = np.linalg.norm(covariances1-covariance2, ord=2, axis=(1,2)).mean()
-    return l1_means_dist, l2_means_dist, l1_covariances_dist, l2_covariances_dist
+    # l1_means_dist = np.linalg.norm(means1-means2, ord=1, axis=1).sum()
+    # percent_l1_means_diff1 = l1_means_dist/np.linalg.norm(means, ord=1, axis=1).sum()
+    l1_means_dist = abs((means1-means2).sum())
+    percent_l1_means_diff1 = l1_means_dist/abs(means1.sum())*100
+    # print(f"l1_means_dist({l1_means_dist:.4f})/means_dist({means1.sum():.4f})*100%={percent_l1_means_diff1:.4f}")
+    # l1_covariances_dist = np.linalg.norm(covariances1-covariance2, ord=1, axis=(1,2)).sum()
+    # percent_l1_covariances_diff1 = l1_covariances_dist/np.linalg.norm(covariances, ord=1, axis=(1,2)).sum()
+    l1_covariances_dist = abs((covariances1-covariance2).sum())
+    percent_l1_covariances_diff1 = l1_covariances_dist/abs(covariances1.sum())*100
+    # print(f"l1_covariances_dist({l1_covariances_dist:.4f})/covariances_dist({covariances.sum():.4f})*100%={percent_l1_covariances_diff1:.4f}")
+    return percent_l1_means_diff1, percent_l1_covariances_diff1
 
 # read command line arguments
 parser = argparse.ArgumentParser(description="GaussianMixture Clustering")
@@ -195,6 +201,7 @@ method1 = "sample1"
 data2_path = "../dataset/UCLAdult/UCLAdult_sample2.data"
 method2 = "sample2"
 data2 = pd.read_csv(data2_path, skipinitialspace=True)
+sample_num = data1.shape[0]
 
 n_components = list(range(2, 11))+[20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, \
                                             130, 140, 150, 160, 170, 180, 190, 200]
@@ -202,6 +209,7 @@ n_components = list(range(2, 11))+[20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120
                                             # 400, 500, 600, 700, 800, 900, 1000]
 # n_components = [300, 400, 500, 600, 700, 800, 900, 1000, 1500, 2000]
 # covariance_types = ['full', 'tied', 'diag', 'spherical']
+# n_components = list(range(2, 5))
 covariance_types = ['full']
 # output_dir = "../result/"+name+"/prediction/"
 # prediction_dir = output_dir+"y_pred/"
@@ -214,7 +222,7 @@ covariance_types = ['full']
 output_dir = "../result/score/"
 if not os.path.exists(output_dir):
     create_directory(output_dir)
-out_path = output_dir+"gmm_means_cov_diff.csv"
+out_path = output_dir+f"gmm_means_cov_diff_{sample_num}.csv"
 with open(out_path, 'w') as f:
     f.write("")
 
@@ -228,7 +236,7 @@ for n_init in [1]:
         #     f.write("n_components,time,prediction_path,probability_path\n")
         with open(out_path, 'a') as f:
             # f.write("n_components,score,gmm.score(d1),gmm.score(d2),my_score(d1),my_score_noweight(d1),my_score(d2)\n")
-            f.write("n_components,l1_means_diff1,l2_means_diff1,l1_covariances_diff1,l2_covariances_diff1,l1_means_diff2,l2_means_diff2,l1_covariances_diff2,l2_covariances_diff2\n")
+            f.write("n_components,l2_means_diff1,l2_means_diff2,l2_covariances_diff1,l2_covariances_diff2\n")
         for n_component in n_components:
             # print(f"Trying n_component={n_component}, covariance_type={covariance_type}, n_init={n_init}")
             start_time = time.time()
@@ -253,10 +261,12 @@ for n_init in [1]:
             log_resp = np.log(resp)
             
             resp1, means1, covariances1, precisions_chol1 = m_setp(data1, log_resp, covariance_type)
-            l1_means_diff1, l2_means_diff1, l1_covariances_diff1, l2_covariances_diff1 = cal_diff(means, covariances, means1, covariances1)
+            # l1_means_diff1, l2_means_diff1, l1_covariances_diff1, l2_covariances_diff1 = cal_diff(means, covariances, means1, covariances1)
+            l2_means_diff1, l2_covariances_diff1 = cal_diff(means, covariances, means1, covariances1)
 
             resp2, means2, covariances2, precisions_chol2 = m_setp(data2, log_resp, covariance_type)
-            l1_means_diff2, l2_means_diff2, l1_covariances_diff2, l2_covariances_diff2 = cal_diff(means, covariances, means2, covariances2)
+            # l1_means_diff2, l2_means_diff2, l1_covariances_diff2, l2_covariances_diff2 = cal_diff(means, covariances, means2, covariances2)
+            l2_means_diff2, l2_covariances_diff2 = cal_diff(means, covariances, means2, covariances2)
 
             # my_score1, log_prob, weighted_log_prob = cal_score(data1, means, precisions_chol, covariance_type, resp)
             # with open(output_dir+f"{n_component}_log_prob1.csv", 'w') as f:
@@ -274,7 +284,7 @@ for n_init in [1]:
             with open(out_path, 'a') as f:
                 # f.write(f"{n_component},{score},{score1},{score2},{my_score1},{my_score_noweight},{my_score2}\n")
                 # f.write(f"{n_component},{score},{first_score1},{second_score1},{score_diff1},{first_score2},{second_score2},{score_diff2}\n")
-                f.write(f"{n_component},{l1_means_diff1},{l2_means_diff1},{l1_covariances_diff1},{l2_covariances_diff1},{l1_means_diff2},{l2_means_diff2},{l1_covariances_diff2},{l2_covariances_diff2}\n")
+                f.write(f"{n_component},{l2_means_diff1:.4f},{l2_means_diff2:.4f},{l2_covariances_diff1:.4f},{l2_covariances_diff2:.4f}\n")
             # prediction_path = prediction_dir+f"{covariance_type}_{n_component}.csv"
             # probability_path = probability_dir+f"{covariance_type}_{n_component}.csv"
             # with open(output_path, 'a') as f:

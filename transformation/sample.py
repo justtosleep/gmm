@@ -1,6 +1,18 @@
 import numpy as np
 import pandas as pd
+import argparse
 
+# read command line arguments
+parser = argparse.ArgumentParser(description="Sample data from dataset")
+
+# add positional arguments
+
+# add optional arguments
+parser.add_argument("--sample_num", type=int, default=1000, help="number of samples")
+
+args = parser.parse_args()
+sample_num = args.sample_num
+print("sample_num: ", sample_num)
 
 # data_path = '../dataset/covtype/covtype.data'
 data_path = '../dataset/UCLAdult/UCLAdult_norm105.data'
@@ -10,7 +22,6 @@ all_label = pd.read_csv(label_path, skipinitialspace=True, header=None).astype(n
 headers = list(all_data.columns.values)
 
 np.random.seed(42)
-sample_num = 10000
 idx = np.random.choice(len(all_data), size=sample_num , replace=False)
 sample_data = all_data.iloc[idx]
 sample_label = all_label.iloc[idx]
