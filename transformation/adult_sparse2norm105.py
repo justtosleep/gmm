@@ -14,12 +14,12 @@ print("original_data.shape", original_data.shape)
 print("original_data.head", original_data.head())
 
 sparse_path = '../dataset/UCLAdult/UCLAdult_sparse.data'
-sparse_data = pd.read_csv(sparse_path, skipinitialspace=True, header=None)
+sparse_data = pd.read_csv(sparse_path, skipinitialspace=True)
 print("sparse_data.shape", sparse_data.shape)
 print("sparse_data.head", sparse_data.head())
 
 # 2. Preprocess data
-n = 32561
+n = sparse_data.shape[0]
 d = 123-5-5-5-2-2-5+6
 data = np.zeros((n, d))
 minmax_scaler = MinMaxScaler()
@@ -48,5 +48,9 @@ print("data.head", data[0:5])
 
 # 3. Save data
 output_path = '../dataset/UCLAdult/UCLAdult_norm105.data'
-np.savetxt(output_path, data, delimiter=",", fmt="%s")
+header = [str(i) for i in range(d)]
+with open(output_path, 'w') as f:
+    f.write(",".join(header)+"\n")
+data = pd.DataFrame(data)
+data.to_csv(output_path, mode='a', index=False, header=False)
 print("Save data to", output_path)

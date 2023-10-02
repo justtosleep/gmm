@@ -7,7 +7,7 @@ import numpy as np
 print("Start reading data")
 input_path = '../dataset/UCLAdult/UCLAdult.data'
 names=['age','workclass','fnlwgt','education','education-num','marital-status','occupation','relationship','race','sex','capital-gain','capital loss','hours-per-week','native-country', 'result']
-original_data = pd.read_csv(input_path, names = names, skipinitialspace=True, header=None)
+original_data = pd.read_csv(input_path, names = names, skipinitialspace=True)
 print("original_data.shape", original_data.shape)
 
 
@@ -52,7 +52,9 @@ famdX = famd.transform(X_train)
 output_path = '../dataset/UCLAdult/UCLAdult_famd.data'
 data = pd.DataFrame(famdX)
 print("data.shape", data.shape)
+headers = [str(i) for i in range(data.shape[1])]
 with open(output_path, 'w') as f:
+    f.write(",".join(headers)+"\n")
     data.to_csv(f, index=False, header=False)
 
 print("FAMD finished")
